@@ -1,4 +1,7 @@
 ﻿
+using System.Drawing;
+using System.Windows.Forms;
+
 namespace Dictionary_Editor_2
 {
     partial class DIctionary
@@ -29,11 +32,11 @@ namespace Dictionary_Editor_2
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.labelTheWord = new System.Windows.Forms.Label();
             this.pictureBoxToLeft = new System.Windows.Forms.PictureBox();
             this.pictureBoxToRight = new System.Windows.Forms.PictureBox();
@@ -44,10 +47,12 @@ namespace Dictionary_Editor_2
             this.Пример = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTranslationsOfOneSense = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gr = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxToLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxToRight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExamplesAndTranslationsForOneSense)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTranslationsOfOneSense)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gr)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTheWord
@@ -108,12 +113,12 @@ namespace Dictionary_Editor_2
             // 
             this.dataGridViewExamplesAndTranslationsForOneSense.AllowUserToResizeColumns = false;
             this.dataGridViewExamplesAndTranslationsForOneSense.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Silver;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            this.dataGridViewExamplesAndTranslationsForOneSense.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            this.dataGridViewExamplesAndTranslationsForOneSense.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewExamplesAndTranslationsForOneSense.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewExamplesAndTranslationsForOneSense.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dataGridViewExamplesAndTranslationsForOneSense.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
@@ -133,16 +138,16 @@ namespace Dictionary_Editor_2
             // 
             // Перевод
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            this.Перевод.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            this.Перевод.DefaultCellStyle = dataGridViewCellStyle7;
             this.Перевод.HeaderText = "Перевод";
             this.Перевод.MinimumWidth = 6;
             this.Перевод.Name = "Перевод";
             // 
             // Пример
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            this.Пример.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            this.Пример.DefaultCellStyle = dataGridViewCellStyle8;
             this.Пример.HeaderText = "Пример";
             this.Пример.MinimumWidth = 6;
             this.Пример.Name = "Пример";
@@ -151,12 +156,12 @@ namespace Dictionary_Editor_2
             // 
             this.dataGridViewTranslationsOfOneSense.AllowUserToResizeColumns = false;
             this.dataGridViewTranslationsOfOneSense.AllowUserToResizeRows = false;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Silver;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
-            this.dataGridViewTranslationsOfOneSense.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black;
+            this.dataGridViewTranslationsOfOneSense.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridViewTranslationsOfOneSense.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewTranslationsOfOneSense.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dataGridViewTranslationsOfOneSense.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
@@ -175,18 +180,29 @@ namespace Dictionary_Editor_2
             // 
             // dataGridViewTextBoxColumn2
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle10;
             this.dataGridViewTextBoxColumn2.HeaderText = "Перевод";
             this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // gr
+            // 
+            this.gr.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gr.Location = new System.Drawing.Point(197, 188);
+            this.gr.Name = "gr";
+            this.gr.RowHeadersWidth = 51;
+            this.gr.RowTemplate.Height = 24;
+            this.gr.Size = new System.Drawing.Size(366, 150);
+            this.gr.TabIndex = 8;
             // 
             // DIctionary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.gr);
             this.Controls.Add(this.dataGridViewTranslationsOfOneSense);
             this.Controls.Add(this.dataGridViewExamplesAndTranslationsForOneSense);
             this.Controls.Add(this.labelNumberOfCurrentWord);
@@ -200,6 +216,7 @@ namespace Dictionary_Editor_2
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxToRight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExamplesAndTranslationsForOneSense)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTranslationsOfOneSense)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gr)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -217,6 +234,43 @@ namespace Dictionary_Editor_2
         private System.Windows.Forms.DataGridViewTextBoxColumn Перевод;
         private System.Windows.Forms.DataGridViewTextBoxColumn Пример;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridView gr;
+        //public void SettingsOfDataGridView(DataGridView gridView)
+        //{
+        //    System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+
+        //    this.gr.AllowUserToResizeColumns = false;
+        //    this.gr.AllowUserToResizeRows = false;
+        //    dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+        //    dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
+        //    dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+        //    dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Silver;
+        //    dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+        //    this.gr.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+        //    this.gr.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+        //    this.gr.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+        //    this.gr.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+        //    this.gr.BorderStyle = System.Windows.Forms.BorderStyle.None;
+        //    this.gr.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
+        //    this.gr.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        //    //this.gr.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+        //    //this.Перевод});
+        //    this.gr.Location = new System.Drawing.Point(12, 132);
+        //    this.gr.Name = "gr";
+        //    this.gr.RowHeadersVisible = true;
+        //    this.gr.RowHeadersWidth = 51;
+        //    this.gr.RowTemplate.Height = 24;
+        //  //  this.gr.Size = new System.Drawing.Size(366, 153);
+        //    this.gr.TabIndex = 6;
+        //    int n = 1;
+        //    n = gr.Columns.Count;
+        //    this.Controls.Add(gr);
+        //    gr.width = 266;
+        //    gr.height = 153;
+
+        //    gr.left = 12; //x coordinate
+        //    gr.top = 132; //y coordinate
+        //}
     }
 }
 

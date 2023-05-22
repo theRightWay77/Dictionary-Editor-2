@@ -16,6 +16,7 @@ namespace Dictionary_Editor_2
 {
     public partial class DIctionary : Form
     {
+      //  DataGridView gr = new DataGridView();
         public DIctionary()
         {
             InitializeComponent();
@@ -27,16 +28,16 @@ namespace Dictionary_Editor_2
 
         private void removeAllRows()
         {
-           
-            for (int i = 0; i < dataGridViewTranslationsOfOneSense.Rows.Count; i++)
-                dataGridViewTranslationsOfOneSense.Rows.Remove(dataGridViewTranslationsOfOneSense.Rows[i]);
 
+            this.gr.Rows.Clear();
+            this.gr.Columns.Clear();
         }
-
+       
 
         private void ShowTranslationsOfOneSense()
         {
             int i = takeTheNumberOfCurrentWordFromFile();
+            Word word = new Word();
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load("osetExamples.xml");
             XmlElement xRoot = xDoc.DocumentElement;
@@ -54,18 +55,30 @@ namespace Dictionary_Editor_2
                         {
                             foreach (XmlNode citsOfSense in childrenOfEntry)
                             {
-                                this.dataGridViewTranslationsOfOneSense.Rows.Add(citsOfSense.InnerText);
-                            }
-                            //this.dataGridViewTranslationsOfOneSense.Rows.Add(childrenOfEntry.InnerText);
-                            // this.labelTheWord.Text = childrenOfEntry.InnerText;
+                                
+                                //  this.dataGridViewTranslationsOfOneSense.Rows.Add(citsOfSense.InnerText);
+                                string t = citsOfSense.InnerText;
+                                word.AddToTransList(t);
+                            }                         
                             wasChanged = true;
                         }
-                       // break;
-
+                     
                     }
                 }
                 else k++;
             }
+            showDataGridViewWithTranslations(word);
+        }
+
+        private void showDataGridViewWithTranslations(Word word)
+        {
+            gr.Columns.Add("Trans", "Перевод");
+            for (int i = 0; i < word.translations.Count; i++)
+            {
+
+                gr.Rows.Add(word.translations[i]);
+            }
+
         }
 
         private int takeTheNumberOfCurrentWordFromFile()
@@ -135,8 +148,12 @@ namespace Dictionary_Editor_2
             int i = NomberOfWord(int.Parse(labelNumberOfCurrentWord.Text), 1);
             labelNumberOfCurrentWord.Text = i.ToString();
             ChangeLabelTheWord();
-           // removeAllRows();
+             removeAllRows();
+           
+            
             ShowTranslationsOfOneSense();
+            
+            
         }
 
         private void pictureBoxToLeft_Click(object sender, EventArgs e)
@@ -144,7 +161,10 @@ namespace Dictionary_Editor_2
             int i = NomberOfWord(int.Parse(labelNumberOfCurrentWord.Text), -1);
             labelNumberOfCurrentWord.Text = i.ToString();
             ChangeLabelTheWord();
-          //  removeAllRows();
+             removeAllRows();
+           
+         
+            
             ShowTranslationsOfOneSense();
         }
     }
