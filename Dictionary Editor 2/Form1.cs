@@ -257,5 +257,54 @@ namespace Dictionary_Editor_2
             ShowTranslationsOfOneSense();
             ShowTranslationsOfExamples();
         }
+
+        private void dataGridViewTranslationsOfOneSense_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            int positionRow = dataGridViewTranslationsOfOneSense.CurrentCell.RowIndex;        
+            string newText = dataGridViewTranslationsOfOneSense.Rows[positionRow].Cells[0].Value.ToString();
+            int i = takeTheNumberOfCurrentWordFromFile();
+            Word word = new Word();
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("osetExamples.xml");
+            XmlElement xRoot = xDoc.DocumentElement;
+            XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"           
+            bool wasChanged = false;
+            int k = 1;
+            foreach (XmlNode node in nodes)
+            {
+                if (wasChanged == true) break;
+                if (k == i)
+                {
+                    foreach (XmlNode childrenOfEntry in node)
+                    {
+                        if (childrenOfEntry.Name == "sense")
+                        {
+                            foreach (XmlNode citsOfSense in childrenOfEntry)
+                            {
+                                foreach (XmlNode formOfSit in citsOfSense)
+                                {
+                                    if (formOfSit.Name == "form")
+                                    {
+                                        foreach (XmlNode orthOfForm in formOfSit)
+                                        {
+                                            if (orthOfForm.Name == "orth")
+                                            {
+                                                orthOfForm.InnerText = newText;
+                                                xDoc.Save("osetExamples.xml");
+                                            }
+                                        }
+                                       
+                                        
+                                    }
+                                }
+                            }
+                            wasChanged = true;
+                        }
+                    }
+                }
+                else k++;
+            }
+
+        }
     }
 }
