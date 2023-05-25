@@ -263,13 +263,14 @@ namespace Dictionary_Editor_2
             int positionRow = dataGridViewTranslationsOfOneSense.CurrentCell.RowIndex;        
             string newText = dataGridViewTranslationsOfOneSense.Rows[positionRow].Cells[0].Value.ToString();
             int i = takeTheNumberOfCurrentWordFromFile();
-            Word word = new Word();
+          //  Word word = WhichWordShow(i);
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load("osetExamples.xml");
             XmlElement xRoot = xDoc.DocumentElement;
             XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"           
             bool wasChanged = false;
             int k = 1;
+            bool oneChange = false;
             foreach (XmlNode node in nodes)
             {
                 if (wasChanged == true) break;
@@ -289,8 +290,11 @@ namespace Dictionary_Editor_2
                                         {
                                             if (orthOfForm.Name == "orth")
                                             {
+                                              //  word.translations.Remove(orthOfForm.InnerText);
                                                 orthOfForm.InnerText = newText;
+                                               // word.translations.Add(newText);
                                                 xDoc.Save("osetExamples.xml");
+
                                             }
                                         }
                                        
@@ -305,6 +309,69 @@ namespace Dictionary_Editor_2
                 else k++;
             }
 
+        }
+
+        private void dataGridViewExamplesAndTranslationsForOneSense_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            int positionRow = dataGridViewExamplesAndTranslationsForOneSense.CurrentCell.RowIndex;
+            string newText = dataGridViewExamplesAndTranslationsForOneSense.Rows[positionRow].Cells[0].Value.ToString();
+            int i = takeTheNumberOfCurrentWordFromFile();
+            Word word = new Word();
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("osetExamples.xml");
+            XmlElement xRoot = xDoc.DocumentElement;
+            XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"           
+            bool wasChanged = false;
+            int k = 1;
+            bool examOrTrans = false;
+            string key = "";
+            string value = "";
+            
+            foreach (XmlNode node in nodes)
+            {
+                if (wasChanged == true) break;
+                if (k == i)
+                {
+                    foreach (XmlNode childrenOfEntry in node)
+                    {
+                        if (childrenOfEntry.Name == "sense")
+                        {
+                            foreach (XmlNode citsOfSense in childrenOfEntry)
+                            {
+                                foreach (XmlNode formOfSit in citsOfSense)
+                                {
+                                    if (wasChanged == true) break;
+                                    if (formOfSit.Name == "quote")
+                                    {
+                                        if (examOrTrans == false)
+                                        {
+                                            word.examples.Remove(formOfSit.InnerText);
+                                            formOfSit.InnerText = newText;
+                                            key = newText;
+                                            
+                                            examOrTrans = true;
+                                            wasChanged = true;
+                                            xDoc.Save("osetExamples.xml");
+                                        }
+                                       
+                                    }
+                                    if (formOfSit.Name == "cit")
+                                    {
+                                        value = formOfSit.InnerText;
+                                        examOrTrans = false;
+                                        word.AddToDictOfExamples(key, value);
+                                    }
+                                }
+
+
+                            }
+
+                            wasChanged = true;
+                        }
+                    }
+                }
+                else k++;
+            }
         }
     }
 }

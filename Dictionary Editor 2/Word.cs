@@ -19,7 +19,8 @@ namespace Dictionary_Editor_2
         
         public void AddToDictOfExamples(string examp, string trans)
         {
-            examples.Add(examp, trans);
+            if(!examples.ContainsKey(examp))
+                examples.Add(examp, trans);
         }
         public void AddToTransList(string translation)
         {

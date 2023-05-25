@@ -225,6 +225,7 @@ namespace Dictionary_Editor_2
             this.dataGridViewExamplesAndTranslationsForOneSense.RowTemplate.Height = 24;
             this.dataGridViewExamplesAndTranslationsForOneSense.Size = new System.Drawing.Size(366, 284);
             this.dataGridViewExamplesAndTranslationsForOneSense.TabIndex = 9;
+            this.dataGridViewExamplesAndTranslationsForOneSense.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewExamplesAndTranslationsForOneSense_CellValueChanged);
             // 
             // DIctionary
             // 
