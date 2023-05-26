@@ -8,6 +8,16 @@ using System.Windows.Forms;
 
 namespace Dictionary_Editor_2
 {
+    public class Words
+    {
+        public Words() { }
+        public List<Word> allWords = new List<Word>();
+        public void addToAllWords(Word word)
+        {
+            allWords.Add(word);
+        }
+    }
+
    public class Word
     {
         public List<string> translations = new List<string>();
