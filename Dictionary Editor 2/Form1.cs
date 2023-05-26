@@ -22,7 +22,7 @@ namespace Dictionary_Editor_2
             InitializeComponent();
             ChangeLabelNumberOfCurrentWord(takeTheNumberOfCurrentWordFromFile());
             ChangeLabelTheWord();
-
+             loadAllWords();
             ShowTranslationsOfOneSense();
             ShowTranslationsOfExamples();
         }
@@ -270,7 +270,7 @@ namespace Dictionary_Editor_2
             XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"           
             bool wasChanged = false;
             int k = 1;
-            bool oneChange = false;
+           // bool oneChange = false;
             foreach (XmlNode node in nodes)
             {
                 if (wasChanged == true) break;
@@ -372,6 +372,79 @@ namespace Dictionary_Editor_2
                 }
                 else k++;
             }
+        }
+
+        private void loadAllWords()
+        {
+            Words words = new Words();
+
+        XmlDocument xDoc = new XmlDocument();
+        xDoc.Load("osetExamples.xml");
+            XmlElement xRoot = xDoc.DocumentElement;
+            //bool examOrTrans = false;
+            //  string key = "";
+            // string value = "";
+            int g =0 ;
+        XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"
+            foreach (XmlNode node in nodes)
+            {
+                if (g == 10000) break;
+                g++;
+                Word word = new Word();
+                foreach (XmlNode childrenOfEntry in node)
+                {
+                    if (childrenOfEntry.Name == "sense")
+                    {
+                        foreach (XmlNode citsOfSense in childrenOfEntry)
+                        {
+                            foreach (XmlNode formOfSit in citsOfSense)
+                            {
+                                if (formOfSit.Name == "form")
+                                {
+                                    string t = citsOfSense.InnerText;
+                                    word.AddToTransList(t);
+                                   
+                                }
+
+    //if (formOfSit.Name == "quote")
+    //{
+    //    if (examOrTrans == false)
+    //    {
+    //        key = formOfSit.InnerText;
+    //        examOrTrans = true;
+    //    }
+
+    //}
+    //if (formOfSit.Name == "cit")
+    //{
+    //    value = formOfSit.InnerText;
+    //    examOrTrans = false;
+    //    word.AddToDictOfExamples(key, value);
+    //}
+                            }
+                        }   
+                    }
+                   
+                }
+                words.allWords.Add(word);
+              //  showDataGridView1(words);
+              if(g == 10000)
+                break;
+
+            }
+             showDataGridView1(words);
+        }
+        private void showDataGridView1(Words words)
+        {
+            dataGridView1.Columns.Add("Trans", "Перевод");
+            foreach (Word word in words.allWords)
+            {
+                for (int k = 0; k < word.translations.Count; k++)
+                {
+                    dataGridView1.Rows.Add(word.translations[k]);
+                }
+            }
+
         }
     }
 }
