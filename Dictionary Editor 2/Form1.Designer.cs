@@ -50,6 +50,7 @@ namespace Dictionary_Editor_2
             this.dataGridViewTranslationsOfOneSense = new System.Windows.Forms.DataGridView();
             this.dataGridViewExamplesAndTranslationsForOneSense = new System.Windows.Forms.DataGridView();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxToLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxToRight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gr)).BeginInit();
@@ -57,6 +58,7 @@ namespace Dictionary_Editor_2
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTranslationsOfOneSense)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExamplesAndTranslationsForOneSense)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTheWord
@@ -208,7 +210,6 @@ namespace Dictionary_Editor_2
             this.dataGridViewTranslationsOfOneSense.RowTemplate.Height = 24;
             this.dataGridViewTranslationsOfOneSense.Size = new System.Drawing.Size(366, 284);
             this.dataGridViewTranslationsOfOneSense.TabIndex = 8;
-            this.dataGridViewTranslationsOfOneSense.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewTranslationsOfOneSense_CellValueChanged);
             // 
             // dataGridViewExamplesAndTranslationsForOneSense
             // 
@@ -239,19 +240,39 @@ namespace Dictionary_Editor_2
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(217, 83);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 132);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(366, 284);
             this.dataGridView1.TabIndex = 10;
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.AllowUserToResizeColumns = false;
+            this.dataGridView2.AllowUserToResizeRows = false;
+            this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView2.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dataGridView2.BackgroundColor = System.Drawing.SystemColors.ControlLight;
+            this.dataGridView2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridView2.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Location = new System.Drawing.Point(422, 132);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.RowHeadersVisible = false;
+            this.dataGridView2.RowHeadersWidth = 51;
+            this.dataGridView2.RowTemplate.Height = 24;
+            this.dataGridView2.Size = new System.Drawing.Size(366, 284);
+            this.dataGridView2.TabIndex = 11;
             // 
             // DIctionary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.dataGridViewExamplesAndTranslationsForOneSense);
             this.Controls.Add(this.dataGridViewTranslationsOfOneSense);
@@ -271,6 +292,7 @@ namespace Dictionary_Editor_2
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTranslationsOfOneSense)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExamplesAndTranslationsForOneSense)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -291,6 +313,7 @@ namespace Dictionary_Editor_2
         private DataGridView dataGridViewTranslationsOfOneSense;
         private DataGridView dataGridViewExamplesAndTranslationsForOneSense;
         private DataGridView dataGridView1;
+        private DataGridView dataGridView2;
         //public void SettingsOfDataGridView(DataGridView gridView)
         //{
         //    System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();

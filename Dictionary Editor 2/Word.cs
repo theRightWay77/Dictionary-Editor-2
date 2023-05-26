@@ -12,6 +12,7 @@ namespace Dictionary_Editor_2
     {
         public List<string> translations = new List<string>();
         public Dictionary<string, string> examples = new Dictionary<string, string>();
+        public string nameOfTheWord;
         public Word()
         {
             

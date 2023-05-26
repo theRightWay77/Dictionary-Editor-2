@@ -22,9 +22,11 @@ namespace Dictionary_Editor_2
             InitializeComponent();
             ChangeLabelNumberOfCurrentWord(takeTheNumberOfCurrentWordFromFile());
             ChangeLabelTheWord();
-             loadAllWords();
-            ShowTranslationsOfOneSense();
-            ShowTranslationsOfExamples();
+         //    loadAllWords();
+            // ShowTranslationsOfOneSense();
+            loadAllWords11111111111();
+            showDataGridView2(words, takeTheNumberOfCurrentWordFromFile());
+            // ShowTranslationsOfExamples();
         }
 
         private void removeAllRowsTR()
@@ -32,88 +34,88 @@ namespace Dictionary_Editor_2
 
             this.dataGridViewTranslationsOfOneSense.Rows.Clear();
             this.dataGridViewTranslationsOfOneSense.Columns.Clear();
-        }
+        }//надо объединить
         private void removeAllRowsEX()
         {
 
             this.dataGridViewExamplesAndTranslationsForOneSense.Rows.Clear();
             this.dataGridViewExamplesAndTranslationsForOneSense.Columns.Clear();
         }
-        private void showDataGridViewWithExamples(Word word)
-        {
-            dataGridViewExamplesAndTranslationsForOneSense.Columns.Add("Examp", "Пример");
-            dataGridViewExamplesAndTranslationsForOneSense.Columns.Add("Trans", "Перевод");
+        //private void showDataGridViewWithExamples(Word word)
+        //{
+        //    dataGridViewExamplesAndTranslationsForOneSense.Columns.Add("Examp", "Пример");
+        //    dataGridViewExamplesAndTranslationsForOneSense.Columns.Add("Trans", "Перевод");
             
-            foreach (KeyValuePair<string, string> pair in word.examples)
-            {
-                string k = pair.Key;
-                string v = pair.Value;
-                dataGridViewExamplesAndTranslationsForOneSense.Rows.Add(k, v);
-            } 
-            //for (int i = 0; i < word.examples.Count; i++)
-            //{
-            //    dataGridViewTranslationsOfOneSense.Rows.Add(word.examples[i].);
-            //}
+        //    foreach (KeyValuePair<string, string> pair in word.examples)
+        //    {
+        //        string k = pair.Key;
+        //        string v = pair.Value;
+        //        dataGridViewExamplesAndTranslationsForOneSense.Rows.Add(k, v);
+        //    } 
+        //    //for (int i = 0; i < word.examples.Count; i++)
+        //    //{
+        //    //    dataGridViewTranslationsOfOneSense.Rows.Add(word.examples[i].);
+        //    //}
 
-        }
-        private void ShowTranslationsOfExamples()
-        {
-            int i = takeTheNumberOfCurrentWordFromFile();
-            Word word = new Word();
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.Load("osetExamples.xml");
-            XmlElement xRoot = xDoc.DocumentElement;
-            XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"           
-            bool wasChanged = false;
-            int k = 1;
-            bool examOrTrans = false;
-            string key = "";
-            string value = "";
-            foreach (XmlNode node in nodes)
-            {
-                if (wasChanged == true) break;
-                if (k == i)
-                {
-                    foreach (XmlNode childrenOfEntry in node)
-                    {
-                        if (childrenOfEntry.Name == "sense")
-                        {
-                            foreach (XmlNode citsOfSense in childrenOfEntry)
-                            {
-                                foreach (XmlNode formOfSit in citsOfSense)
-                                {
-                                    if (formOfSit.Name == "quote")
-                                    {
-                                        if (examOrTrans == false)
-                                        {
-                                            key = formOfSit.InnerText;
-                                            examOrTrans = true;
-                                        }
-                                        //else
-                                        //{
-                                        //    value = formOfSit.InnerText;
-                                        //    examOrTrans = false;
-                                        //}
-                                    }
-                                    if (formOfSit.Name == "cit")
-                                    {
-                                        value = formOfSit.InnerText;
-                                        examOrTrans = false;
-                                        word.AddToDictOfExamples(key, value);
-                                    }
-                                }
+        //}
+        //private void ShowTranslationsOfExamples()
+        //{
+        //    int i = takeTheNumberOfCurrentWordFromFile();
+        //    Word word = new Word();
+        //    XmlDocument xDoc = new XmlDocument();
+        //    xDoc.Load("osetExamples.xml");
+        //    XmlElement xRoot = xDoc.DocumentElement;
+        //    XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"           
+        //    bool wasChanged = false;
+        //    int k = 1;
+        //    bool examOrTrans = false;
+        //    string key = "";
+        //    string value = "";
+        //    foreach (XmlNode node in nodes)
+        //    {
+        //        if (wasChanged == true) break;
+        //        if (k == i)
+        //        {
+        //            foreach (XmlNode childrenOfEntry in node)
+        //            {
+        //                if (childrenOfEntry.Name == "sense")
+        //                {
+        //                    foreach (XmlNode citsOfSense in childrenOfEntry)
+        //                    {
+        //                        foreach (XmlNode formOfSit in citsOfSense)
+        //                        {
+        //                            if (formOfSit.Name == "quote")
+        //                            {
+        //                                if (examOrTrans == false)
+        //                                {
+        //                                    key = formOfSit.InnerText;
+        //                                    examOrTrans = true;
+        //                                }
+        //                                //else
+        //                                //{
+        //                                //    value = formOfSit.InnerText;
+        //                                //    examOrTrans = false;
+        //                                //}
+        //                            }
+        //                            if (formOfSit.Name == "cit")
+        //                            {
+        //                                value = formOfSit.InnerText;
+        //                                examOrTrans = false;
+        //                                word.AddToDictOfExamples(key, value);
+        //                            }
+        //                        }
                                 
                                
-                            }
+        //                    }
                            
-                            wasChanged = true;
-                        }
-                    }
-                }
-                else k++;
-            }
-            showDataGridViewWithExamples(word);
-        }
+        //                    wasChanged = true;
+        //                }
+        //            }
+        //        }
+        //        else k++;
+        //    }
+        //    showDataGridViewWithExamples(word);
+        //}
         private void showDataGridViewWithTranslations(Word word)
         {
             dataGridViewTranslationsOfOneSense.Columns.Add("Trans", "Перевод");
@@ -163,7 +165,7 @@ namespace Dictionary_Editor_2
                 else k++;
             }
             showDataGridViewWithTranslations(word);
-        }
+        } // переделано
 
        
 
@@ -172,7 +174,7 @@ namespace Dictionary_Editor_2
             StreamReader sr = new StreamReader("numberOfCurrentWord.txt");
             int numOfCurrentWord = int.Parse( sr.ReadLine());
             //labelNumberOfCurrentWord.Text = numOfCurrentWord;
-            //sr.Close();
+            sr.Close();
             return numOfCurrentWord;
         }
 
@@ -190,7 +192,7 @@ namespace Dictionary_Editor_2
             labelNumberOfCurrentWord.Text = i.ToString();
         }
 
-        private string WhichWordShow(int i)
+        private string WhichWordShow(int i) 
         {
             string theWord = "";
             XmlDocument xDoc = new XmlDocument();
@@ -198,21 +200,17 @@ namespace Dictionary_Editor_2
             XmlElement xRoot = xDoc.DocumentElement;
             XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"
             int k = 1;
-          //  bool wasChanged = false;
+          
             foreach (XmlNode node in nodes)
-            {
-               // if (wasChanged == true) break;
+            {            
                 if (k == i)
                 {
                     foreach (XmlNode childrenOfEntry in node)
                     {
                         if (childrenOfEntry.Name == "form")
-                        {
-                            // Console.WriteLine(childrenOfEntry.InnerText);
+                        {                        
                             theWord = childrenOfEntry.InnerText;
-                            return theWord;
-                            //this.labelTheWord.Text = childrenOfEntry.InnerText;
-                          //  wasChanged = true;
+                            return theWord;                      
                         }
                         break;
                     }
@@ -236,12 +234,11 @@ namespace Dictionary_Editor_2
             ChangeLabelTheWord();
             removeAllRowsTR();
             removeAllRowsEX();
-
-
-            ShowTranslationsOfOneSense();
-            ShowTranslationsOfExamples();
-
-
+        //    loadAllWords();
+          //  loadAllWords11111111111();
+            showDataGridView2(words, takeTheNumberOfCurrentWordFromFile());
+            //  ShowTranslationsOfOneSense();
+            // ShowTranslationsOfExamples();
         }
 
         private void pictureBoxToLeft_Click(object sender, EventArgs e)
@@ -251,65 +248,78 @@ namespace Dictionary_Editor_2
             ChangeLabelTheWord();
             removeAllRowsTR();
             removeAllRowsEX();
+           // loadAllWords();
 
-
-
-            ShowTranslationsOfOneSense();
-            ShowTranslationsOfExamples();
+            // loadAllWords11111111111();
+            showDataGridView2(words, takeTheNumberOfCurrentWordFromFile());
+            //  ShowTranslationsOfOneSense();
+            //ShowTranslationsOfExamples();
         }
 
-        private void dataGridViewTranslationsOfOneSense_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            int positionRow = dataGridViewTranslationsOfOneSense.CurrentCell.RowIndex;        
-            string newText = dataGridViewTranslationsOfOneSense.Rows[positionRow].Cells[0].Value.ToString();
-            int i = takeTheNumberOfCurrentWordFromFile();
-          //  Word word = WhichWordShow(i);
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.Load("osetExamples.xml");
-            XmlElement xRoot = xDoc.DocumentElement;
-            XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"           
-            bool wasChanged = false;
-            int k = 1;
-           // bool oneChange = false;
-            foreach (XmlNode node in nodes)
-            {
-                if (wasChanged == true) break;
-                if (k == i)
-                {
-                    foreach (XmlNode childrenOfEntry in node)
-                    {
-                        if (childrenOfEntry.Name == "sense")
-                        {
-                            foreach (XmlNode citsOfSense in childrenOfEntry)
-                            {
-                                foreach (XmlNode formOfSit in citsOfSense)
-                                {
-                                    if (formOfSit.Name == "form")
-                                    {
-                                        foreach (XmlNode orthOfForm in formOfSit)
-                                        {
-                                            if (orthOfForm.Name == "orth")
-                                            {
-                                              //  word.translations.Remove(orthOfForm.InnerText);
-                                                orthOfForm.InnerText = newText;
-                                               // word.translations.Add(newText);
-                                                xDoc.Save("osetExamples.xml");
+        //private void dataGridViewTranslationsOfOneSense_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    int i = takeTheNumberOfCurrentWordFromFile();
+        //    string nameOfCurrentWord = labelTheWord.Text;
 
-                                            }
-                                        }
-                                       
-                                        
-                                    }
-                                }
-                            }
-                            wasChanged = true;
-                        }
-                    }
-                }
-                else k++;
-            }
+        //    Word word = new Word(); // должны взять текушее слово, а не создавать новое
+        //    foreach (Word item in words.allWords)
+        //    {
+        //        if (item.nameOfTheWord == nameOfCurrentWord)
+        //            word = item;
+        //    }
+        //    int positionRow = dataGridView1.CurrentCell.RowIndex;
+        //    string newText = dataGridView1.Rows[positionRow].Cells[0].Value.ToString();
 
-        }
+
+        //    XmlDocument xDoc = new XmlDocument();
+        //    xDoc.Load("osetExamples.xml");
+        //    XmlElement xRoot = xDoc.DocumentElement;
+        //    XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"                  
+        //    int k = 1;
+        //    int indexOfTransl = positionRow;
+        //    bool wasChanged = false;
+        //    foreach (XmlNode node in nodes)
+        //    {
+        //        if (wasChanged == true) break;
+        //        if (k == i)
+        //        {
+        //            foreach (XmlNode childrenOfEntry in node)
+        //            {
+        //                if (wasChanged == true) break;
+        //                if (childrenOfEntry.Name == "sense")
+        //                {
+        //                    foreach (XmlNode citsOfSense in childrenOfEntry)
+        //                    {
+        //                        foreach (XmlNode formOfSit in citsOfSense)
+        //                        {
+        //                            if (wasChanged == true) break;
+        //                            if (formOfSit.Name == "form")
+        //                            {
+        //                                foreach (XmlNode orthOfForm in formOfSit)
+        //                                {
+        //                                    if (wasChanged == true) break;
+        //                                    if (orthOfForm.Name == "orth")
+        //                                    {
+        //                                        //word.translations[indexOfTransl] = newText;
+        //                                        orthOfForm.InnerText = newText;
+        //                                        // word.translations.Add(newText);
+        //                                        xDoc.Save("osetExamples.xml");
+        //                                        wasChanged = true;
+        //                                    }
+        //                                }
+
+
+        //                            }
+        //                        }
+        //                    }
+
+        //                }
+        //            }
+        //        }
+        //        else k++;
+        //    }
+
+        //}
 
         private void dataGridViewExamplesAndTranslationsForOneSense_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -373,24 +383,130 @@ namespace Dictionary_Editor_2
                 else k++;
             }
         }
+        public Words words = new Words();
+        //    private void loadAllWords() //объединила в один
+        //    {
+        //        Words words = new Words();
 
-        private void loadAllWords()
+        //    XmlDocument xDoc = new XmlDocument();
+        //    xDoc.Load("osetExamples.xml");
+        //        XmlElement xRoot = xDoc.DocumentElement;
+        //        //bool examOrTrans = false;
+        //        //  string key = "";
+        //        // string value = "";
+        //        int g =0 ;
+        //    XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"
+        //        foreach (XmlNode node in nodes)
+        //        {
+        //            if (g == 100) break;
+        //            g++;
+        //            Word word = new Word();
+        //            foreach (XmlNode childrenOfEntry in node)
+        //            {
+        //                if (childrenOfEntry.Name == "form")
+        //                {
+        //                    string theWord;
+        //                    theWord = childrenOfEntry.InnerText;
+        //                    word.nameOfTheWord = theWord;                    
+        //                }
+        //                break;
+        //            }
+        //            foreach (XmlNode childrenOfEntry in node)
+        //            {
+        //                if (childrenOfEntry.Name == "sense")
+        //                {
+        //                    foreach (XmlNode citsOfSense in childrenOfEntry)
+        //                    {
+        //                        foreach (XmlNode formOfSit in citsOfSense)
+        //                        {
+        //                            if (formOfSit.Name == "form")
+        //                            {
+        //                                string t = citsOfSense.InnerText;
+        //                                word.AddToTransList(t);
+
+        //                            }
+
+        ////if (formOfSit.Name == "quote")
+        ////{
+        ////    if (examOrTrans == false)
+        ////    {
+        ////        key = formOfSit.InnerText;
+        ////        examOrTrans = true;
+        ////    }
+
+        ////}
+        ////if (formOfSit.Name == "cit")
+        ////{
+        ////    value = formOfSit.InnerText;
+        ////    examOrTrans = false;
+        ////    word.AddToDictOfExamples(key, value);
+        ////}
+        //                        }
+        //                    }   
+        //                }
+
+        //            }
+        //            words.allWords.Add(word);
+        //          //  showDataGridView1(words);
+        //          if(g == 100)
+        //            break;
+
+        //        }
+        //         showDataGridView1(words, takeTheNumberOfCurrentWordFromFile());
+        //    } 
+        private void loadAllWords11111111111()
         {
-            Words words = new Words();
+          
 
-        XmlDocument xDoc = new XmlDocument();
-        xDoc.Load("osetExamples.xml");
-            XmlElement xRoot = xDoc.DocumentElement;
-            //bool examOrTrans = false;
-            //  string key = "";
-            // string value = "";
-            int g =0 ;
-        XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("osetExamples.xml");
+            XmlElement xRoot = xDoc.DocumentElement;           
+            int g = 0;
+            bool examOrTrans = false;
+            string key = "";
+            string value = "";
+            XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"
             foreach (XmlNode node in nodes)
             {
-                if (g == 10000) break;
+                if (g == 100) break;
                 g++;
                 Word word = new Word();
+                foreach (XmlNode childrenOfEntry in node)
+                {
+                    if (childrenOfEntry.Name == "form")
+                    {
+                        string theWord;
+                        theWord = childrenOfEntry.InnerText;
+                        word.nameOfTheWord = theWord;
+                    }
+                    break;
+                }
+                foreach (XmlNode childrenOfEntry in node)
+                {
+                    if (childrenOfEntry.Name == "sense")
+                    {
+                        foreach (XmlNode citsOfSense in childrenOfEntry)
+                        {
+                            foreach (XmlNode formOfSit in citsOfSense)
+                            {                              
+                                if (formOfSit.Name == "quote")
+                                {
+                                    if (examOrTrans == false)
+                                    {
+                                        key = formOfSit.InnerText;
+                                          examOrTrans = true;                                                                            
+                                    }
+                                }
+                                if (formOfSit.Name == "cit")
+                                {
+                                    value = formOfSit.InnerText;
+                                    examOrTrans = false;
+                                    word.AddToDictOfExamples(key, value);
+                                }
+                            }
+                        }                                                                             
+                    }
+                }
                 foreach (XmlNode childrenOfEntry in node)
                 {
                     if (childrenOfEntry.Name == "sense")
@@ -403,48 +519,132 @@ namespace Dictionary_Editor_2
                                 {
                                     string t = citsOfSense.InnerText;
                                     word.AddToTransList(t);
-                                   
                                 }
-
-    //if (formOfSit.Name == "quote")
-    //{
-    //    if (examOrTrans == false)
-    //    {
-    //        key = formOfSit.InnerText;
-    //        examOrTrans = true;
-    //    }
-
-    //}
-    //if (formOfSit.Name == "cit")
-    //{
-    //    value = formOfSit.InnerText;
-    //    examOrTrans = false;
-    //    word.AddToDictOfExamples(key, value);
-    //}
                             }
-                        }   
+                        }
                     }
-                   
                 }
-                words.allWords.Add(word);
-              //  showDataGridView1(words);
-              if(g == 10000)
-                break;
+                words.allWords.Add(word);          
+                if (g == 100)
+                    break;
 
             }
-             showDataGridView1(words);
+          //  showDataGridView2(words, takeTheNumberOfCurrentWordFromFile());
         }
-        private void showDataGridView1(Words words)
+        private void showDataGridView2(Words words, int i)
         {
+            removeAllRowsDGV1();
             dataGridView1.Columns.Add("Trans", "Перевод");
-            foreach (Word word in words.allWords)
+            removeAllRowsDGV2();
+            dataGridView2.Columns.Add("Examp", "Пример");
+            dataGridView2.Columns.Add("Trans", "Перевод");
+            Word word = words.allWords[i - 1];
+            foreach (KeyValuePair<string, string> examp in word.examples)
             {
-                for (int k = 0; k < word.translations.Count; k++)
-                {
-                    dataGridView1.Rows.Add(word.translations[k]);
-                }
+                dataGridView2.Rows.Add(examp.Key, examp.Value);
+               
             }
+            foreach (string trans in word.translations)
+            {
+                dataGridView1.Rows.Add(trans);
+            }
+        }
+        private void removeAllRowsDGV2()
+        {
+            this.dataGridView2.Rows.Clear();
+            this.dataGridView2.Columns.Clear();
+        }
+        //private void showDataGridView1(Words words, int i)
+        //{
+        //    removeAllRowsDGV1();
+        //    dataGridView1.Columns.Add("Trans", "Перевод");
+        //    Word word = words.allWords[i-1];
+        //    foreach (string trans in word.translations)
+        //    {
+        //        dataGridView1.Rows.Add(trans);
+        //    }
+             
+        //    //foreach (Word word in words.allWords)
+        //    //{
+        //    //    for (int k = 0; k < word.translations.Count; k++)
+        //    //    {
+        //    //        dataGridView1.Rows.Add(word.nameOfTheWord + " " + word.translations[k]);
+        //    //    }
+        //    //}
 
+        //}
+        private void removeAllRowsDGV1()
+        {
+            this.dataGridView1.Rows.Clear();
+            this.dataGridView1.Columns.Clear();
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+
+            int i = takeTheNumberOfCurrentWordFromFile();
+            string nameOfCurrentWord = labelTheWord.Text;
+
+            Word word = new Word(); // должны взять текушее слово, а не создавать новое
+            foreach (Word item in words.allWords)
+            {
+                if (item.nameOfTheWord == nameOfCurrentWord)
+                    word = item;
+            }
+            int positionRow = dataGridView1.CurrentCell.RowIndex;
+            string newText = dataGridView1.Rows[positionRow].Cells[0].Value.ToString();
+
+
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("osetExamples.xml");
+            XmlElement xRoot = xDoc.DocumentElement;
+            XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"                  
+            int k = 1;
+            int indexOfTransl = 0;
+            bool wasChanged = false;
+            foreach (XmlNode node in nodes)
+            {
+                if (wasChanged == true) break;
+                if (k == i)
+                {
+                    foreach (XmlNode childrenOfEntry in node)
+                    {
+                        if (wasChanged == true) break;
+                        if (childrenOfEntry.Name == "sense")
+                        {
+                            foreach (XmlNode citsOfSense in childrenOfEntry)
+                            {
+                                foreach (XmlNode formOfSit in citsOfSense)
+                                {
+                                    if (wasChanged == true) break;
+                                    if (formOfSit.Name == "form")
+                                    {
+                                        foreach (XmlNode orthOfForm in formOfSit)
+                                        {
+                                            if (wasChanged == true) break;
+                                            if (orthOfForm.Name == "orth" && indexOfTransl == positionRow)
+                                            {
+                                                //word.translations[indexOfTransl] = newText;
+                                                orthOfForm.InnerText = newText;
+                                                // word.translations.Add(newText);
+                                                xDoc.Save("osetExamples.xml");
+                                                wasChanged = true;
+                                               
+                                            }
+                                            else indexOfTransl++;
+                                        }
+
+
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+                else k++;
+            }
+            loadAllWords11111111111();
         }
     }
 }
