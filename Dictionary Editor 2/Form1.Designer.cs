@@ -228,7 +228,6 @@ namespace Dictionary_Editor_2
             this.dataGridViewExamplesAndTranslationsForOneSense.RowTemplate.Height = 24;
             this.dataGridViewExamplesAndTranslationsForOneSense.Size = new System.Drawing.Size(366, 284);
             this.dataGridViewExamplesAndTranslationsForOneSense.TabIndex = 9;
-            this.dataGridViewExamplesAndTranslationsForOneSense.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewExamplesAndTranslationsForOneSense_CellValueChanged);
             // 
             // dataGridView1
             // 
@@ -266,6 +265,7 @@ namespace Dictionary_Editor_2
             this.dataGridView2.RowTemplate.Height = 24;
             this.dataGridView2.Size = new System.Drawing.Size(366, 284);
             this.dataGridView2.TabIndex = 11;
+            this.dataGridView2.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellValueChanged);
             // 
             // DIctionary
             // 

@@ -39,6 +39,30 @@ namespace Dictionary_Editor_2
         {
             allWords.Add(word);
         }
+
+        public Word GetWordByIndex(int i)
+        {
+            return allWords[i];
+        }
+        public void ChangeKey(Word word, string oldKey, string newKey)
+        {
+            string value = word.examples[oldKey];         
+            word.examples.Remove(oldKey);
+            word.examples[newKey] = value;  
+           
+        }
+        public void ChangeValue(Word word, string oldValue, string newValue)
+        {
+            string key = "";
+            foreach (KeyValuePair<string,string> item in word.examples)
+            {
+                if (item.Value == oldValue) key = item.Key;
+            }
+            word.examples.Remove(key);
+            word.examples[key] = newValue; 
+
+        }
+
     }
 
 }
