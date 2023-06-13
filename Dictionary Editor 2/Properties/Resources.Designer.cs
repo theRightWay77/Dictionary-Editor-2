@@ -61,6 +61,36 @@ namespace Dictionary_Editor_2.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на 5.
+        /// </summary>
+        internal static string numberOfCurrentWord {
+            get {
+                return ResourceManager.GetString("numberOfCurrentWord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &lt;?xml-model href=&quot;https://raw.githubusercontent.com/DARIAH-ERIC/lexicalresources/master/Schemas/TEILex0/out/TEILex0.rng&quot; type=&quot;application/xml&quot; schematypens=&quot;http://relaxng.org/ns/structure/1.0&quot;?&gt;
+        ///&lt;body&gt;
+        ///  &lt;entry xml:id=&quot;а&quot; xml:lang=&quot;oss&quot;&gt;
+        ///    &lt;form type=&quot;lemma&quot;&gt;
+        ///      &lt;orth&gt;а&lt;/orth&gt;
+        ///    &lt;/form&gt;
+        ///    &lt;sense xml:id=&quot;а.0&quot;&gt;
+        ///      &lt;cit type=&quot;translationEquivalent&quot; xml:lang=&quot;ru&quot;&gt;
+        ///        &lt;form&gt;
+        ///          &lt;orth&gt;этот&lt;/orth&gt;
+        ///        &lt;/form&gt;
+        ///      &lt;/cit&gt;
+        ///      &lt;cit type=&quot;translationEquivalent&quot; xml:lang=&quot;r [остаток строки не уместился]&quot;;.
+        /// </summary>
+        internal static string osetExamples {
+            get {
+                return ResourceManager.GetString("osetExamples", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap кнопкаСтрелка {

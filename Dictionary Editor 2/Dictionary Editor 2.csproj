@@ -88,5 +88,11 @@
   <ItemGroup>
     <None Include="Resources\кнопкаСтрелка2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\osetExamples.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\numberOfCurrentWord.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

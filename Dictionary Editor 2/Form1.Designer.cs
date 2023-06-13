@@ -32,11 +32,11 @@ namespace Dictionary_Editor_2
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
             this.labelTheWord = new System.Windows.Forms.Label();
             this.labelCountOfWords = new System.Windows.Forms.Label();
             this.labelNumberOfCurrentWord = new System.Windows.Forms.Label();
@@ -72,7 +72,7 @@ namespace Dictionary_Editor_2
             this.labelTheWord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.labelTheWord.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelTheWord.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelTheWord.Location = new System.Drawing.Point(304, 12);
+            this.labelTheWord.Location = new System.Drawing.Point(295, 12);
             this.labelTheWord.Name = "labelTheWord";
             this.labelTheWord.Size = new System.Drawing.Size(131, 46);
             this.labelTheWord.TabIndex = 0;
@@ -102,12 +102,12 @@ namespace Dictionary_Editor_2
             // 
             this.gr.AllowUserToResizeColumns = false;
             this.gr.AllowUserToResizeRows = false;
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle26.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle26.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle26.SelectionBackColor = System.Drawing.Color.Silver;
-            dataGridViewCellStyle26.SelectionForeColor = System.Drawing.Color.Black;
-            this.gr.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle31.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle31.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle31.SelectionBackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle31.SelectionForeColor = System.Drawing.Color.Black;
+            this.gr.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle31;
             this.gr.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gr.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.gr.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
@@ -127,16 +127,16 @@ namespace Dictionary_Editor_2
             // 
             // Перевод
             // 
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            this.Перевод.DefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            this.Перевод.DefaultCellStyle = dataGridViewCellStyle32;
             this.Перевод.HeaderText = "Перевод";
             this.Перевод.MinimumWidth = 6;
             this.Перевод.Name = "Перевод";
             // 
             // Пример
             // 
-            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            this.Пример.DefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            this.Пример.DefaultCellStyle = dataGridViewCellStyle33;
             this.Пример.HeaderText = "Пример";
             this.Пример.MinimumWidth = 6;
             this.Пример.Name = "Пример";
@@ -145,12 +145,12 @@ namespace Dictionary_Editor_2
             // 
             this.grr.AllowUserToResizeColumns = false;
             this.grr.AllowUserToResizeRows = false;
-            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle29.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle29.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle29.SelectionBackColor = System.Drawing.Color.Silver;
-            dataGridViewCellStyle29.SelectionForeColor = System.Drawing.Color.Black;
-            this.grr.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle34.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle34.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle34.SelectionBackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle34.SelectionForeColor = System.Drawing.Color.Black;
+            this.grr.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle34;
             this.grr.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.grr.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.grr.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
@@ -169,8 +169,8 @@ namespace Dictionary_Editor_2
             // 
             // dataGridViewTextBoxColumn2
             // 
-            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle35;
             this.dataGridViewTextBoxColumn2.HeaderText = "Перевод";
             this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
@@ -257,7 +257,7 @@ namespace Dictionary_Editor_2
             this.buttonRight.BackgroundImage = global::Dictionary_Editor_2.Properties.Resources.кнопкаСтрелка;
             this.buttonRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.buttonRight.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.buttonRight.Location = new System.Drawing.Point(568, 12);
+            this.buttonRight.Location = new System.Drawing.Point(589, 12);
             this.buttonRight.Name = "buttonRight";
             this.buttonRight.Size = new System.Drawing.Size(77, 77);
             this.buttonRight.TabIndex = 0;
