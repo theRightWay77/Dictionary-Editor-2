@@ -26,10 +26,7 @@ namespace Dictionary_Editor_2
         public void AddToTransList(string translation)
         {
             translations.Add(translation);
-        }
-        
-        
-
+        }              
     }
     public class Words
     {
@@ -60,9 +57,6 @@ namespace Dictionary_Editor_2
             }
             word.examples.Remove(key);
             word.examples[key] = newValue; 
-
         }
-
     }
-
 }
