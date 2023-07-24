@@ -80,7 +80,7 @@ namespace Dictionary_Editor_2
         private string WhichWordShow(int i)
         {
            Word word = words.GetWordByIndex(i - 1);
-            return word.nameOfTheWord;
+            return word.lemma;
         }//вытаскивает из списка всех слов, то, которое нам нужно
 
         private void ChangeLabelTheWord()//меняет слово в окне
@@ -106,77 +106,47 @@ namespace Dictionary_Editor_2
         }
     
         private void loadAllWords()//выгружает слова из xml файла в список
-        {         
+        {
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load("osetExamples.xml");
-            XmlElement xRoot = xDoc.DocumentElement;           
-            int g = 0;
-            bool examOrTrans = false;
-            string key = "";
-            string value = "";
+            XmlElement xRoot = xDoc.DocumentElement;
             XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"
-            foreach (XmlNode node in nodes)
+
+            XmlNodeList allSense;
+            int count = 0;
+            foreach (XmlNode entry in nodes)
             {
-                if (g == 100) break;
-                g++;
                 Word word = new Word();
-                foreach (XmlNode childrenOfEntry in node)
+                word.lemma = entry.SelectSingleNode("form/orth").InnerText;
+
+                count++;
+                if (count == 100) break;
+                allSense = entry?.SelectNodes("sense");
+                for (int i = 0; i < allSense.Count; i++)
                 {
-                    if (childrenOfEntry.Name == "form")
-                    {
-                        string theWord;
-                        theWord = childrenOfEntry.InnerText;
-                        word.nameOfTheWord = theWord;
-                    }
-                    break;
+                    Sense sense = new Sense();
+                    word.allSenses.Add(sense);
                 }
-                foreach (XmlNode childrenOfEntry in node)
+                XmlNodeList cits;
+
+                int indexOfSense = -1;
+                foreach (XmlNode oneSense in allSense)
                 {
-                    if (childrenOfEntry.Name == "sense")
+                    indexOfSense++;
+                    cits = oneSense.SelectNodes("cit");
+                    foreach (XmlNode item in cits)
                     {
-                        foreach (XmlNode citsOfSense in childrenOfEntry)
+                        if (item.Attributes["type"].Value == "translationEquivalent")
+                            word.AddTrans(indexOfSense, item.InnerText);
+                        if (item.Attributes["type"].Value == "example")
                         {
-                            foreach (XmlNode formOfSit in citsOfSense)
-                            {                              
-                                if (formOfSit.Name == "quote")
-                                {
-                                    if (examOrTrans == false)
-                                    {
-                                        key = formOfSit.InnerText;
-                                          examOrTrans = true;                                                                            
-                                    }
-                                }
-                                if (formOfSit.Name == "cit")
-                                {
-                                    value = formOfSit.InnerText;
-                                    examOrTrans = false;
-                                    word.AddToDictOfExamples(key, value);
-                                }
-                            }
-                        }                                                                             
-                    }
-                }
-                foreach (XmlNode childrenOfEntry in node)
-                {
-                    if (childrenOfEntry.Name == "sense")
-                    {
-                        foreach (XmlNode citsOfSense in childrenOfEntry)
-                        {
-                            foreach (XmlNode formOfSit in citsOfSense)
-                            {
-                                if (formOfSit.Name == "form")
-                                {
-                                    string t = citsOfSense.InnerText;
-                                    word.AddToTransList(t);
-                                }
-                            }
+                            word.AddExample(indexOfSense, item.SelectSingleNode("quote").InnerText);
+                            word.AddTransOfExample(indexOfSense, item.LastChild.InnerText);
                         }
                     }
                 }
-                words.allWords.Add(word);          
-                if (g == 100)
-                    break;
-            }       
+                words.addToAllWords(word);
+            }
         }
 
         private void showDataGridViewes(Words words, int i)//выводит информацию о слове из списка слов в две таблицы
@@ -186,15 +156,17 @@ namespace Dictionary_Editor_2
             dataGridView2.Columns.Add("Examp", "Пример");
             dataGridView2.Columns.Add("Trans", "Перевод");
             Word word = words.allWords[i - 1];
-            foreach (KeyValuePair<string, string> examp in word.examples)
+            foreach (Sense sense in word.allSenses)
             {
-               // dataGridView2.Rows.Add("Пример 1", "");
-                dataGridView2.Rows.Add(examp.Key, examp.Value);              
-            }        
-            foreach (string trans in word.translations)
-            {             
-                dataGridView1.Rows.Add(trans);
-            }           
+                foreach (string trans in sense.translationsOfSense)
+                {
+                    dataGridView1.Rows.Add(trans);
+                }
+                for (int k = 0; k < sense.examples.Count; k++)
+                {
+                    dataGridView2.Rows.Add(sense.examples[k], sense.translationsOfExamples[k]);
+                }
+            }
         }      
         
         private void removeAllRows()
