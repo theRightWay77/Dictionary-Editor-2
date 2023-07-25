@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
+using static System.Windows.Forms.TabControl;
+
 
 namespace Dictionary_Editor_2
 {
@@ -52,34 +54,6 @@ namespace Dictionary_Editor_2
             labelNumberOfCurrentWord.Text = i.ToString();
         }
 
-        //переделала с классами в две строчки
-        //private string WhichWordShow(int i) 
-        //{
-        //    string theWord = "";
-        //    XmlDocument xDoc = new XmlDocument();
-        //    xDoc.Load("osetExamples.xml");
-        //    XmlElement xRoot = xDoc.DocumentElement;
-        //    XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"
-        //    int k = 1;
-
-        //    foreach (XmlNode node in nodes)
-        //    {            
-        //        if (k == i)
-        //        {
-        //            foreach (XmlNode childrenOfEntry in node)
-        //            {
-        //                if (childrenOfEntry.Name == "form")
-        //                {                        
-        //                    theWord = childrenOfEntry.InnerText;
-        //                    return theWord;                      
-        //                }
-        //                break;
-        //            }
-        //        }
-        //        else k++;
-        //    }
-        //    return theWord;
-        //}
         private string WhichWordShow(int i)//вытаскивает из списка всех слов, то, которое нам нужно
         {
             Word word = words.GetWordByIndex(i - 1);
@@ -229,9 +203,29 @@ namespace Dictionary_Editor_2
                     // dataGridView4.Rows.Add(word.allSenses[t].translationsOfExamples[q]);
                 }
                 if (word.allSenses[t].examples.Count == 0) newTabPage.Controls.Add(dataGridView4);
+
+
+                string newdata;
+                int indexOfRow;
+                int indexOfTab;
+                foreach (TabPage tabPage in tabControl1.TabPages)
+                {
+                    // DataGridViewCellEventHandler cellValueChanged = dataGridView3.CellValueChanged;
+                    dataGridView3.CellValueChanged += (sender, e) => {
+                        MessageBox.Show("hello");
+                        newdata = dataGridView3.CurrentCell.Value.ToString();
+                        indexOfRow = dataGridView3.CurrentCell.RowIndex;
+                        indexOfTab = tabControl1.SelectedIndex;
+                        CellValueChanged(word, newdata, indexOfRow, indexOfTab);
+                    };
+                }
+
+                Console.WriteLine("yup");
+                // TabPageCollection
             }
 
         }
+
 
         private void removeAllRows()//удаляет все строки и столбцы обеих таблиц перед внесением информации о новом слове
         {
@@ -289,8 +283,63 @@ namespace Dictionary_Editor_2
             loadAllWords();
         }
 
+
+
+
+        private void CellValueChanged(Word word, string newdata, int indexOfRow, int indexOfTab)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("osetExamples.xml");
+            XmlElement xRoot = xDoc.DocumentElement;
+            XmlNodeList allEntrys = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"
+            XmlNode currentWord = allEntrys[0];
+            foreach (XmlNode entry in allEntrys)
+            {
+                if (entry.SelectSingleNode("form/orth").InnerText == word.lemma)
+                    currentWord = entry; break;
+
+            }
+
+            XmlNodeList allSense; //все значения нашего слова
+            XmlNodeList allCits; //нужный сит
+
+
+            allSense = currentWord?.SelectNodes("sense");
+            allCits = allSense[indexOfTab].SelectNodes("cit");
+
+            allCits[indexOfRow].SelectSingleNode("form/orth").InnerText = newdata;
+
+            xDoc.Save("osetExamples.xml");
+
+        }
+
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)//сохраняет изменения данных о переводе слова из левой таблицы
         {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("osetExamples.xml");
+            XmlElement xRoot = xDoc.DocumentElement;
+            XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"
+
+
+            XmlNodeList allSense;
+
+            foreach (XmlNode entry in nodes)
+            {
+                Word word = new Word();
+
+                allSense = entry?.SelectNodes("sense");
+
+                XmlNodeList cits;
+
+
+                foreach (XmlNode oneSense in allSense)
+                {
+                    cits = oneSense.SelectNodes("cit");
+                }
+                xDoc.Save("osetExamples.xml");
+            }
+
+
             //int i = takeTheNumberOfCurrentWordFromFile();        
             //Word word = new Word(); // должны взять текушее слово, а не создавать новое
             //word = words.GetWordByIndex(i - 1);
@@ -348,6 +397,7 @@ namespace Dictionary_Editor_2
             //    else k++;
             //}
             //loadAllWords();
+
         }
 
         private void dataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)//сохраняет изменения данных о примере употребления слова из правой таблицы(недоработано)
