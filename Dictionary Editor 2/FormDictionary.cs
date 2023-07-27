@@ -125,6 +125,7 @@ namespace Dictionary_Editor_2
                 }
                 words.addToAllWords(word);
             }
+            //showDataGridViewes(words, takeTheNumberOfCurrentWordFromFile());
         }
 
         private void showDataGridViewes(Words words, int i)//выводит информацию о слове из списка слов в две таблицы
@@ -208,18 +209,33 @@ namespace Dictionary_Editor_2
                 string newdata;
                 int indexOfRow;
                 int indexOfTab;
-                // foreach (TabPage tabPage in tabControl1.TabPages)
-                // {
+
                 // DataGridViewCellEventHandler cellValueChanged = dataGridView3.CellValueChanged;
                 dataGridView3.CellValueChanged += (sender, e) => {
-                    MessageBox.Show("изменения сохранены");
+
                     newdata = dataGridView3.CurrentCell.Value.ToString();
                     indexOfRow = dataGridView3.CurrentCell.RowIndex;
                     indexOfTab = tabControl1.SelectedIndex;
                     CellValueChanged(word, newdata, indexOfRow, indexOfTab);
+                    MessageBox.Show("изменения сохранены");
                 };
-                // }
 
+                string newdata2;
+                int indexOfRow2;
+                int indexOfTab2;
+                bool examOrTrans;
+                dataGridView4.CellValueChanged += (sender, e) => {
+                    newdata2 = dataGridView4.CurrentCell.Value.ToString();
+                    if (dataGridView4.CurrentCell.ColumnIndex == 0)
+                    {
+                        examOrTrans = true;
+                    }
+                    else examOrTrans = false;
+                    indexOfRow2 = dataGridView4.CurrentCell.RowIndex;
+                    indexOfTab2 = tabControl1.SelectedIndex;
+                    CellValueChanged2(word, newdata2, indexOfRow2, indexOfTab2, examOrTrans);
+                    MessageBox.Show("изменения сохранены");
+                };
                 Console.WriteLine("yup");
                 // TabPageCollection
             }
@@ -304,10 +320,39 @@ namespace Dictionary_Editor_2
             allCits[indexOfRow].SelectSingleNode("form/orth").InnerText = newdata;
 
             xDoc.Save("osetExamples.xml");
-
+            // loadAllWords();
         }
 
+        private void CellValueChanged2(Word word, string newdata, int indexOfRow, int indexOfTab, bool examOrTrans)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("osetExamples.xml");
+            XmlElement xRoot = xDoc.DocumentElement;
+            XmlNodeList allEntrys = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"
+            XmlNode currentWord = allEntrys[takeTheNumberOfCurrentWordFromFile() - 1];
 
+            XmlNodeList allSense; //все значения нашего слова                                
+            List<XmlNode> allCitsExamp = new List<XmlNode>();
+
+            allSense = currentWord?.SelectNodes("sense");
+
+            foreach (XmlNode cit in allSense[indexOfTab])
+            {
+                if (cit.Attributes["type"].Value == "example")
+                    allCitsExamp.Add(cit);
+            }
+
+
+            //if (allCits[indexOfRow].SelectSingleNode("form/orth").Attributes["type"].Value == "translationEquivalent") Console.WriteLine("yup");
+            //allCits[indexOfRow].SelectSingleNode("form/orth").Attributes["type"].Value = newdata;
+
+            if (examOrTrans == true)
+                allCitsExamp[indexOfRow].SelectSingleNode("quote").InnerText = newdata;
+            else allCitsExamp[indexOfRow].SelectSingleNode("cit/quote").InnerText = newdata;
+
+            xDoc.Save("osetExamples.xml");
+            // loadAllWords();
+        }
 
         private void dataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)//сохраняет изменения данных о примере употребления слова из правой таблицы(недоработано)
         {
