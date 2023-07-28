@@ -210,7 +210,7 @@ namespace Dictionary_Editor_2
                 int indexOfRow;
                 int indexOfTab;
 
-                // DataGridViewCellEventHandler cellValueChanged = dataGridView3.CellValueChanged;
+
                 dataGridView3.CellValueChanged += (sender, e) => {
 
                     newdata = dataGridView3.CurrentCell.Value.ToString();
@@ -236,8 +236,16 @@ namespace Dictionary_Editor_2
                     CellValueChanged2(word, newdata2, indexOfRow2, indexOfTab2, examOrTrans);
                     MessageBox.Show("изменения сохранены");
                 };
+
+                dataGridView3.CellValueChanged += (sender, e) => { };
+
+
+
+
+
                 Console.WriteLine("yup");
                 // TabPageCollection
+
             }
 
         }
@@ -300,7 +308,26 @@ namespace Dictionary_Editor_2
         }
 
 
+        private void CreateNewNode(XmlDocument xDoc, string newdata, Sense sense)
+        {
+            XmlElement TranslElem = xDoc.CreateElement("cit");
 
+            XmlAttribute TranslAttr = xDoc.CreateAttribute("type");
+
+            TranslElem.SetAttribute("type", "translationEquivalent");
+            TranslElem.SetAttribute("xml:lang", "ru");
+
+            XmlElement companyElem = xDoc.CreateElement("form");
+            XmlElement orthElem = xDoc.CreateElement("orth");
+            XmlText orthText = xDoc.CreateTextNode(newdata);
+
+            TranslElem.AppendChild(companyElem);
+            companyElem.AppendChild(orthElem);
+
+            // sense.ins(TranslElem);
+
+            xDoc.Save("osetExamples.xml");
+        }
 
         private void CellValueChanged(Word word, string newdata, int indexOfRow, int indexOfTab)
         {
@@ -310,14 +337,44 @@ namespace Dictionary_Editor_2
             XmlNodeList allEntrys = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"
             XmlNode currentWord = allEntrys[takeTheNumberOfCurrentWordFromFile() - 1];
 
-            XmlNodeList allSense; //все значения нашего слова
-            XmlNodeList allCits; //нужный сит
-
+            XmlNodeList allSense; //все значения нашего слова           
+            List<XmlNode> allCitsTrans = new List<XmlNode>();
 
             allSense = currentWord?.SelectNodes("sense");
-            allCits = allSense[indexOfTab].SelectNodes("cit");
 
-            allCits[indexOfRow].SelectSingleNode("form/orth").InnerText = newdata;
+            foreach (XmlNode cit in allSense[indexOfTab])
+            {
+                if (cit.Attributes["type"].Value == "translationEquivalent")
+                    allCitsTrans.Add(cit);
+            }
+
+            if (allCitsTrans.Count >= indexOfRow + 1)
+                allCitsTrans[indexOfRow].SelectSingleNode("form/orth").InnerText = newdata;
+            else
+            {
+                XmlElement newCit = xDoc.CreateElement("cit");
+
+                XmlAttribute AttrType = xDoc.CreateAttribute("type");
+
+
+                newCit.SetAttribute("type", "translationEquivalent");
+                newCit.SetAttribute("xml:lang", "ru");
+
+                XmlElement newForm = xDoc.CreateElement("form");
+                XmlElement newOrth = xDoc.CreateElement("orth");
+                XmlText newTransl = xDoc.CreateTextNode(newdata);
+
+                newCit.AppendChild(newForm);
+                newForm.AppendChild(newOrth);
+                newOrth.InnerText = newdata;
+                allSense[indexOfTab].InsertAfter(newCit, allCitsTrans[allCitsTrans.Count - 1]);
+                //MessageBox.Show("yup");
+
+            }
+
+
+
+            //  allCits[indexOfRow].SelectSingleNode("form/orth").InnerText = newdata;
 
             xDoc.Save("osetExamples.xml");
             // loadAllWords();
@@ -354,74 +411,6 @@ namespace Dictionary_Editor_2
             // loadAllWords();
         }
 
-        private void dataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)//сохраняет изменения данных о примере употребления слова из правой таблицы(недоработано)
-        {
-            //int positionRow = dataGridView2.CurrentCell.RowIndex;
-            //int positionColumn = dataGridView2.CurrentCell.ColumnIndex;       
-            //string newText = dataGridView2.CurrentCell.Value.ToString();
-            //int i = takeTheNumberOfCurrentWordFromFile();
-            //Word word = new Word(); // должны взять текушее слово, а не создавать новое
-            //word = words.GetWordByIndex(i - 1);        
 
-            //XmlDocument xDoc = new XmlDocument();
-            //xDoc.Load("osetExamples.xml");
-            //XmlElement xRoot = xDoc.DocumentElement;
-            //XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"           
-            //int indexOfTransl = 0;
-            //bool wasChanged = false;
-            //int k = 0;
-            //bool examOrTrans = false;
-            //foreach (XmlNode node in nodes)
-            //{
-            //    if (wasChanged == true) break;
-            //    if (k == i)
-            //    {
-            //        foreach (XmlNode childrenOfEntry in node)
-            //        {
-            //            if (wasChanged == true) break;
-            //            if (childrenOfEntry.Name == "sense")
-            //            {
-            //                if (indexOfTransl == positionRow)
-            //                {
-            //                    foreach (XmlNode citsOfSense in childrenOfEntry)
-            //                    {
-            //                        foreach (XmlNode formOfSit in citsOfSense)
-            //                        {
-            //                            if (wasChanged == true) break;
-            //                            if (positionColumn != 1)
-            //                            {
-            //                                if (formOfSit.Name == "quote")
-            //                                {
-            //                                    if (examOrTrans == false)
-            //                                    {                                                
-            //                                        words.ChangeKey(word, formOfSit.InnerText, newText);
-            //                                        formOfSit.InnerText = newText;
-            //                                        examOrTrans = true;
-            //                                        wasChanged = true;
-            //                                        xDoc.Save("osetExamples.xml");
-            //                                    }
-            //                                }
-            //                                else break;
-            //                            }
-            //                            else
-            //                            if (formOfSit.Name == "cit")
-            //                            {
-            //                                words.ChangeValue(word, formOfSit.InnerText, newText);
-            //                                formOfSit.InnerText = newText;
-            //                                examOrTrans = true;
-            //                                wasChanged = true;
-            //                                xDoc.Save("osetExamples.xml");
-            //                            }
-            //                        }
-            //                    }
-            //                }
-            //                else
-            //                { indexOfTransl++; continue; }                           
-            //            }                     
-            //        }
-            //    }
-            //    else k++;
-            //}
-        }
     }
 }
