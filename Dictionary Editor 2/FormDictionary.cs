@@ -212,12 +212,23 @@ namespace Dictionary_Editor_2
 
 
                 dataGridView3.CellValueChanged += (sender, e) => {
+                    if (dataGridView3.CurrentCell.Value != null)
+                    {
+                        newdata = dataGridView3.CurrentCell.Value.ToString();
+                        indexOfRow = dataGridView3.CurrentCell.RowIndex;
+                        indexOfTab = tabControl1.SelectedIndex;
+                        CellValueChanged(word, newdata, indexOfRow, indexOfTab);
+                        MessageBox.Show("изменения сохранены");
+                    }
+                    else
+                    {
+                        indexOfRow = dataGridView3.CurrentCell.RowIndex;
+                        indexOfTab = tabControl1.SelectedIndex;
+                        dataGridView3.Rows.RemoveAt(dataGridView3.CurrentCell.RowIndex);
+                        DeleteRow(word, indexOfRow, indexOfTab);
+                        MessageBox.Show("изменения сохранены");
+                    }
 
-                    newdata = dataGridView3.CurrentCell.Value.ToString();
-                    indexOfRow = dataGridView3.CurrentCell.RowIndex;
-                    indexOfTab = tabControl1.SelectedIndex;
-                    CellValueChanged(word, newdata, indexOfRow, indexOfTab);
-                    MessageBox.Show("изменения сохранены");
                 };
 
                 string newdata2;
@@ -238,11 +249,6 @@ namespace Dictionary_Editor_2
                 };
 
                 dataGridView3.CellValueChanged += (sender, e) => { };
-
-
-
-
-
                 Console.WriteLine("yup");
                 // TabPageCollection
 
@@ -261,54 +267,54 @@ namespace Dictionary_Editor_2
             tabControl1.TabPages.Clear();
         }
 
-        void dataGridView1_AddRow(int positionRow, string newText)//сохраняет новую строку перевода значения
-        {
-            int i = takeTheNumberOfCurrentWordFromFile();
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.Load("osetExamples.xml");
-            XmlElement xRoot = xDoc.DocumentElement;
-            XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"                  
-            int k = 1;
+        // void dataGridView1_AddRow(int positionRow, string newText)//сохраняет новую строку перевода значения
+        //{
+        //     int i = takeTheNumberOfCurrentWordFromFile();
+        //     XmlDocument xDoc = new XmlDocument();
+        //     xDoc.Load("osetExamples.xml");
+        //     XmlElement xRoot = xDoc.DocumentElement;
+        //     XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"                  
+        //     int k = 1;
 
-            bool wasChanged = false;
-            foreach (XmlNode node in nodes)
-            {
-                if (wasChanged == true) break;
-                if (k == i)
-                {
-                    foreach (XmlNode childrenOfEntry in node)
-                    {
-                        if (wasChanged == true) break;
-                        if (childrenOfEntry.Name == "sense")
-                        {
-                            XmlElement TranslElem = xDoc.CreateElement("cit");
+        //     bool wasChanged = false;
+        //     foreach (XmlNode node in nodes)
+        //     {
+        //         if (wasChanged == true) break;
+        //         if (k == i)
+        //         {
+        //             foreach (XmlNode childrenOfEntry in node)
+        //             {
+        //                 if (wasChanged == true) break;
+        //                 if (childrenOfEntry.Name == "sense")
+        //                 {
+        //                     XmlElement TranslElem = xDoc.CreateElement("cit");
 
-                            XmlAttribute TranslAttr = xDoc.CreateAttribute("type");
+        //                     XmlAttribute TranslAttr = xDoc.CreateAttribute("type");                                              
 
-                            TranslElem.SetAttribute("type", "translationEquivalent");
-                            TranslElem.SetAttribute("xml:lang", "ru");
+        //                     TranslElem.SetAttribute("type", "translationEquivalent");
+        //                     TranslElem.SetAttribute("xml:lang", "ru");
 
-                            XmlElement companyElem = xDoc.CreateElement("form");
-                            XmlElement orthElem = xDoc.CreateElement("orth");
-                            XmlText orthText = xDoc.CreateTextNode(newText);
+        //                     XmlElement companyElem = xDoc.CreateElement("form");
+        //                     XmlElement orthElem = xDoc.CreateElement("orth");
+        //                     XmlText orthText = xDoc.CreateTextNode(newText);
 
-                            TranslElem.AppendChild(companyElem);
-                            companyElem.AppendChild(orthElem);
+        //                     TranslElem.AppendChild(companyElem);
+        //                     companyElem.AppendChild(orthElem);                           
 
-                            childrenOfEntry.AppendChild(TranslElem);
+        //                     childrenOfEntry.AppendChild(TranslElem);
 
-                            xDoc.Save("osetExamples.xml");
-                            wasChanged = true;
-                        }
-                    }
-                }
-                else k++;
-            }
-            loadAllWords();
-        }
+        //                     xDoc.Save("osetExamples.xml");
+        //                     wasChanged = true;
+        //                 }
+        //             }
+        //         }
+        //         else k++;
+        //     }
+        //     loadAllWords();
+        // }
 
 
-        private void CreateNewNode(XmlDocument xDoc, string newdata, Sense sense)
+        private void CreateNewNode(XmlDocument xDoc, string newdata, Sense sense)//сделать, чтобы работало
         {
             XmlElement TranslElem = xDoc.CreateElement("cit");
 
@@ -328,6 +334,8 @@ namespace Dictionary_Editor_2
 
             xDoc.Save("osetExamples.xml");
         }
+
+
 
         private void CellValueChanged(Word word, string newdata, int indexOfRow, int indexOfTab)
         {
@@ -372,8 +380,6 @@ namespace Dictionary_Editor_2
 
             }
 
-
-
             //  allCits[indexOfRow].SelectSingleNode("form/orth").InnerText = newdata;
 
             xDoc.Save("osetExamples.xml");
@@ -411,6 +417,31 @@ namespace Dictionary_Editor_2
             // loadAllWords();
         }
 
+        private void DeleteRow(Word word, int indexOfRow, int indexOfTab)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("osetExamples.xml");
+            XmlElement xRoot = xDoc.DocumentElement;
+            XmlNodeList allEntrys = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"
+            XmlNode currentWord = allEntrys[takeTheNumberOfCurrentWordFromFile() - 1];
 
+            XmlNodeList allSense; //все значения нашего слова           
+            List<XmlNode> allCitsTrans = new List<XmlNode>();
+
+            allSense = currentWord?.SelectNodes("sense");
+
+            foreach (XmlNode cit in allSense[indexOfTab])
+            {
+                if (cit.Attributes["type"].Value == "translationEquivalent")
+                    allCitsTrans.Add(cit);
+            }
+
+            allSense[indexOfTab].RemoveChild(allCitsTrans[indexOfRow]);
+
+            //  allCits[indexOfRow].SelectSingleNode("form/orth").InnerText = newdata;
+
+            xDoc.Save("osetExamples.xml");
+            // loadAllWords();
+        }
     }
 }
