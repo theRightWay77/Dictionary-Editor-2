@@ -89,7 +89,6 @@ namespace Dictionary_Editor_2
             XmlElement xRoot = xDoc.DocumentElement;
             XmlNodeList nodes = xRoot.SelectNodes("*"); // выбор всех дочерних узлов "entry"
 
-
             XmlNodeList allSense;
             int count = 0;
             foreach (XmlNode entry in nodes)
@@ -131,22 +130,7 @@ namespace Dictionary_Editor_2
         private void showDataGridViewes(Words words, int i)//выводит информацию о слове из списка слов в две таблицы
         {
             removeAllRows();
-            dataGridView1.Columns.Add("Trans", "Перевод");
-            dataGridView2.Columns.Add("Examp", "Пример");
-            dataGridView2.Columns.Add("Trans", "Перевод");
             Word word = words.allWords[i - 1];
-            foreach (Sense sense in word.allSenses)
-            {
-                foreach (string trans in sense.translationsOfSense)
-                {
-                    dataGridView1.Rows.Add(trans);
-                }
-                for (int k = 0; k < sense.examples.Count; k++)
-                {
-                    dataGridView2.Rows.Add(sense.examples[k], sense.translationsOfExamples[k]);
-                }
-            }
-
             for (int t = 0; t < word.allSenses.Count; t++)
             {
                 TabPage newTabPage = new TabPage();
@@ -169,6 +153,7 @@ namespace Dictionary_Editor_2
                 dataGridView3.RowTemplate.Height = 24;
                 dataGridView3.Size = new System.Drawing.Size(200, 284);
                 dataGridView3.TabIndex = 10;
+
                 dataGridView3.Columns.Add("Trans", "Перевод");
                 DataGridView dataGridView4 = new DataGridView();
                 dataGridView4.AllowUserToResizeColumns = false;
@@ -186,30 +171,25 @@ namespace Dictionary_Editor_2
                 dataGridView4.RowTemplate.Height = 24;
                 dataGridView4.Size = new System.Drawing.Size(366, 284);
                 dataGridView4.TabIndex = 10;
+
                 dataGridView4.Columns.Add("Examp", "Пример");
                 dataGridView4.Columns.Add("Trans", "Перевод");
                 foreach (string text in word.allSenses[t].translationsOfSense)
                 {
                     newTabPage.Controls.Add(dataGridView3);
-                    //  newTabPage.Controls.Add(dataGridView4);
-
                     dataGridView3.Rows.Add(text);
                 }
-                for (int q = 0; q < word.allSenses[t].examples.Count; q++)
-                {
-
-                    newTabPage.Controls.Add(dataGridView4);
-
-                    dataGridView4.Rows.Add(word.allSenses[t].examples[q], word.allSenses[t].translationsOfExamples[q]);
-                    // dataGridView4.Rows.Add(word.allSenses[t].translationsOfExamples[q]);
-                }
                 if (word.allSenses[t].examples.Count == 0) newTabPage.Controls.Add(dataGridView4);
-
+                else
+                    for (int q = 0; q < word.allSenses[t].examples.Count; q++)
+                    {
+                        newTabPage.Controls.Add(dataGridView4);
+                        dataGridView4.Rows.Add(word.allSenses[t].examples[q], word.allSenses[t].translationsOfExamples[q]);
+                    }
 
                 string newdata;
                 int indexOfRow;
                 int indexOfTab;
-
 
                 dataGridView3.CellValueChanged += (sender, e) => {
                     if (dataGridView3.CurrentCell.Value != null)
@@ -218,6 +198,7 @@ namespace Dictionary_Editor_2
                         indexOfRow = dataGridView3.CurrentCell.RowIndex;
                         indexOfTab = tabControl1.SelectedIndex;
                         CellValueChanged(word, newdata, indexOfRow, indexOfTab);
+                        word.allSenses[indexOfTab].translationsOfSense[indexOfRow] = newdata;
                         MessageBox.Show("изменения сохранены");
                     }
                     else
@@ -226,9 +207,8 @@ namespace Dictionary_Editor_2
                         indexOfTab = tabControl1.SelectedIndex;
                         dataGridView3.Rows.RemoveAt(dataGridView3.CurrentCell.RowIndex);
                         DeleteRow(word, indexOfRow, indexOfTab);
-                        MessageBox.Show("изменения сохранены");
+                        MessageBox.Show("yup");
                     }
-
                 };
 
                 string newdata2;
@@ -236,19 +216,32 @@ namespace Dictionary_Editor_2
                 int indexOfTab2;
                 bool examOrTrans;
                 dataGridView4.CellValueChanged += (sender, e) => {
+                    //if (dataGridView4.CurrentCell.DefaultNewRowValue != null)
+                    //{                      
                     newdata2 = dataGridView4.CurrentCell.Value.ToString();
-                    if (dataGridView4.CurrentCell.ColumnIndex == 0)
-                    {
-                        examOrTrans = true;
-                    }
+                    if (dataGridView4.CurrentCell.ColumnIndex == 0) examOrTrans = true;
                     else examOrTrans = false;
+
                     indexOfRow2 = dataGridView4.CurrentCell.RowIndex;
                     indexOfTab2 = tabControl1.SelectedIndex;
                     CellValueChanged2(word, newdata2, indexOfRow2, indexOfTab2, examOrTrans);
+                    if (dataGridView4.CurrentCell.ColumnIndex == 0)
+                        word.allSenses[indexOfTab2].examples[indexOfRow2] = newdata2;
+                    if (dataGridView4.CurrentCell.ColumnIndex == 1)
+                        word.allSenses[indexOfTab2].translationsOfExamples[indexOfRow2] = newdata2;
                     MessageBox.Show("изменения сохранены");
+                    //}
+                    //if (dataGridView4.CurrentRow == null)
+                    //{
+                    //    MessageBox.Show("вы пытаетесь удалить пример");
+                    //}
+                    //  else MessageBox.Show("эта ячейча не может быть пустой, напишите что-нибудь");
                 };
 
-                dataGridView3.CellValueChanged += (sender, e) => { };
+                dataGridView4.CellValueChanged += (sender, e) => {
+
+
+                };
                 Console.WriteLine("yup");
                 // TabPageCollection
 
@@ -313,30 +306,6 @@ namespace Dictionary_Editor_2
         //     loadAllWords();
         // }
 
-
-        private void CreateNewNode(XmlDocument xDoc, string newdata, Sense sense)//сделать, чтобы работало
-        {
-            XmlElement TranslElem = xDoc.CreateElement("cit");
-
-            XmlAttribute TranslAttr = xDoc.CreateAttribute("type");
-
-            TranslElem.SetAttribute("type", "translationEquivalent");
-            TranslElem.SetAttribute("xml:lang", "ru");
-
-            XmlElement companyElem = xDoc.CreateElement("form");
-            XmlElement orthElem = xDoc.CreateElement("orth");
-            XmlText orthText = xDoc.CreateTextNode(newdata);
-
-            TranslElem.AppendChild(companyElem);
-            companyElem.AppendChild(orthElem);
-
-            // sense.ins(TranslElem);
-
-            xDoc.Save("osetExamples.xml");
-        }
-
-
-
         private void CellValueChanged(Word word, string newdata, int indexOfRow, int indexOfTab)
         {
             XmlDocument xDoc = new XmlDocument();
@@ -364,7 +333,6 @@ namespace Dictionary_Editor_2
 
                 XmlAttribute AttrType = xDoc.CreateAttribute("type");
 
-
                 newCit.SetAttribute("type", "translationEquivalent");
                 newCit.SetAttribute("xml:lang", "ru");
 
@@ -379,11 +347,9 @@ namespace Dictionary_Editor_2
                 //MessageBox.Show("yup");
 
             }
-
             //  allCits[indexOfRow].SelectSingleNode("form/orth").InnerText = newdata;
 
             xDoc.Save("osetExamples.xml");
-            // loadAllWords();
         }
 
         private void CellValueChanged2(Word word, string newdata, int indexOfRow, int indexOfTab, bool examOrTrans)
@@ -435,13 +401,8 @@ namespace Dictionary_Editor_2
                 if (cit.Attributes["type"].Value == "translationEquivalent")
                     allCitsTrans.Add(cit);
             }
-
             allSense[indexOfTab].RemoveChild(allCitsTrans[indexOfRow]);
-
-            //  allCits[indexOfRow].SelectSingleNode("form/orth").InnerText = newdata;
-
             xDoc.Save("osetExamples.xml");
-            // loadAllWords();
         }
     }
 }
